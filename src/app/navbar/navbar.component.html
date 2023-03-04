@@ -1,0 +1,65 @@
+<nav class="bg-dark bg-gradient p-4">
+  <div class="container-fluid">
+    <div class="row">
+      <!-- <div class="col-12"> -->
+      <div class="col-2 col-lg-1 d-lg-none">
+        <i class="fa-solid fa-bars fa-2x white pointer" (click)="showNavigation=!showNavigation"></i>
+      </div>
+      <div class="col-10 col-md-3 white align-self-center brandName">
+        My Income My Expenditure
+      </div>
+      <!-- </div> -->
+    </div>
+  </div>
+</nav>
+<div class="container-fluid mb-4 d-lg-none" *ngIf="showNavigation">
+  <div class="row bg-transparent p-4 shadow">
+    <div class="col-offset-4"></div>
+    <ul class="navbar-nav d-flex flex-row justify-content-center">
+      <li
+        class="nav-item pointer px-5 mx-5 text-center rounded-5 white-link"
+        routerLink="dashboard"
+        routerLinkActive="linkActive"
+        (click)="showNavigation=!showNavigation"
+      >
+        <a class="nav-link">Dashboard</a>
+      </li>
+      <li
+        class="nav-item pointer px-5 mx-5 text-center rounded-5 white-link"
+        routerLink="update"
+        routerLinkActive="linkActive"
+        (click)="showNavigation=!showNavigation"
+      >
+        <a class="nav-link">Update</a>
+      </li>
+
+    </ul>
+    <div class="col-offset-4"></div>
+  </div>
+</div>
+<div class="container-fluid mb-4 d-none d-lg-block" >
+  <div class="row bg-transparent p-4 shadow">
+    <div class="col-offset-4"></div>
+    <ul class="navbar-nav d-flex flex-row justify-content-center">
+      <li
+        class="nav-item pointer px-5 mx-5 text-center rounded-5 white-link "
+        routerLink="dashboard"
+        routerLinkActive="linkActive"
+
+      >
+        <a class="nav-link">Dashboard</a>
+      </li>
+      <li
+        class="nav-item pointer px-5 mx-5 text-center rounded-5 white-link "
+        routerLink="update"
+        routerLinkActive="linkActive"
+
+      >
+        <a class="nav-link">Update</a>
+      </li>
+
+    </ul>
+    <div class="col-offset-4"></div>
+  </div>
+</div>
+<!-- -->

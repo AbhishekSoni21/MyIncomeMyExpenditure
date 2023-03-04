@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import './styles/color';
+@import './styles/utilities';
+@import './styles/variable';
+
+html,
+body {
+  height: 100%;
+  font-size: 62.5%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
