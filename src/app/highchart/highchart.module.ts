@@ -1,7 +1,7 @@
 import { HighchartsChartModule } from 'highcharts-angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HighchartComponent } from './highchart/highchart.component';
+import { HighchartComponent } from './highchart.component';
 
 
 
@@ -14,7 +14,8 @@ import { HighchartComponent } from './highchart/highchart.component';
     HighchartsChartModule,
   ],
   exports:[
-    HighchartComponent
+    HighchartComponent,
+
   ]
 })
 export class HighchartModule { }
