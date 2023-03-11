@@ -67,7 +67,7 @@ export class HighchartService {
       showTotal: data?.options?.chartProperties?.showTotal,
       yAxisTitle: data?.options?.chartProperties?.yAxisTitle,
       xAxisTitle: data?.options?.chartProperties?.xAxisTitle,
-      enableLegends: data?.options?.chartProperties?.enabledLegends,
+      enabledLegends: data?.options?.chartProperties?.enabledLegends,
       formatValue: data?.options?.chartProperties?.formatValue || false,
       dataLabels:
         data?.options?.chartProperties?.dataSeriesValues?.enabledDataLabel,
@@ -97,6 +97,12 @@ export class HighchartService {
     switch (configuredOption.type) {
       case 'column':
         return this.getColumnChart(
+          this.getColumnSeriesData(array, series),
+          category,
+          configuredOption
+        );
+      case 'stackcolumn':
+        return this.getStackColumnChart(
           this.getColumnSeriesData(array, series),
           category,
           configuredOption
@@ -298,16 +304,28 @@ export class HighchartService {
         type: 'pie',
         name: 'Value',
         innerSize: isDonut ? '90%' : null,
-        data: array.map((row) => {
+        data: array.map((row, index) => {
           let total = 0;
+          const temp: any[] = [];
+
           series.map((serie) => {
-            total += serie;
+            total += array[index][serie];
+            temp.push({
+              name:
+                APPDATAMnemonic.filter((value) => value.key === serie)[0]?.[
+                  'displayName'
+                ] || '',
+              y: row[serie],
+            });
           });
-          return {
-            name: row[category],
-            y: total,
-          };
-        }),
+          // array.map((row) => {
+          // series.map((serie) => {
+          //  temp.push({[serie]:row[serie]})
+          // });
+          // return
+          // }),
+          return temp;
+        })[0],
       },
     ];
     return pieSeries;
@@ -338,7 +356,7 @@ export class HighchartService {
         ...defaultSubTitleOptions,
       },
       legend: {
-        enabled: configuredOption?.enableLegends || false,
+        enabled: configuredOption?.enabledLegends || false,
         itemStyle: { ...legendFontSize },
       },
       xAxis: {
@@ -441,6 +459,135 @@ export class HighchartService {
     return chart;
   }
 
+  getStackColumnChart(series: any, category: any, options: any) {
+    const configuredOption = { ...options };
+    console.log('option---', configuredOption);
+    console.log('cateogry', category);
+
+    const chart = {
+      chart: {
+        type: 'column',
+        // style:{
+        //   fontFamily:''
+        // }
+      },
+      credits: {
+        enabled: false,
+      },
+      // colors:[],
+      title: {
+        text: configuredOption?.title || null,
+        ...defaultTitleOptions,
+      },
+      subtitle: {
+        text: configuredOption?.subTitle || null,
+        ...defaultSubTitleOptions,
+      },
+      legend: {
+        enabled: configuredOption?.enabledLegends || false,
+        itemStyle: { ...legendFontSize },
+      },
+      xAxis: {
+        categories: category || null,
+        title: {
+          text: configuredOption?.xAxisTitle || null,
+        },
+        crosshair: true,
+        tickWidth: 0,
+        labels: {
+          style: {
+            fontSize: '12px',
+          },
+        },
+        lineColor: '#e7e7e8',
+        gridLineColor: '#e7e7e8',
+      },
+      yAxis: {
+        min: 0,
+        title: {
+          text: configuredOption?.yAxisTitle || null,
+        },
+        tickWidth: 0,
+        labels: {
+          style: {
+            fontSize: '12px',
+          },
+        },
+        lineColor: '#e7e7e8',
+        gridLineColor: '#e7e7e8',
+      },
+      tooltip: {
+        useHTML: true,
+        headerFormat: '',
+        pointFormatter: function (this: any) {
+          return (
+            '<span style="fontSize:14px;fontWeight:bold">' +
+            this.category +
+            '</span><br>' +
+            '<span style="color:>' +
+            this.series.color +
+            ';"></span><span style="fontSize:12px">' +
+            this.series.name +
+            ':' +
+            (configuredOption?.formatValue ? '<i class="fa fa-inr"></i>' : '') +
+            this.y +
+            '</b></span><br/>'
+          );
+        },
+      },
+      plotOptions: {
+        column: {
+          pointPadding: 0.2,
+          borderWidth: 0,
+          borderRadius: 2,
+          stacking: 'normal',
+        },
+        series: {
+          dataLabels: {
+            allowOverlap: true,
+            crop: false,
+            overflow: 'none',
+            rotation: 0,
+            position: 'top',
+            align: 'center',
+            x: -2,
+            y: -5,
+            formatter: function (this: any) {
+              return (configuredOption?.formatValue ? '₹' : '') + this.y;
+            },
+            style: {
+              ...dataLabelStyle,
+            },
+            enabled: configuredOption?.dataLabels || false,
+          },
+        },
+      },
+      responsive: {
+        rules: [
+          {
+            condition: {
+              maxWidth: 768,
+            },
+            chartOptions: {
+              plotOptions: {
+                series: {
+                  dataLabels: {
+                    enabled: false,
+                  },
+                },
+              },
+            },
+          },
+        ],
+      },
+
+      series: series,
+    };
+    console.log('Stack Column chart is', chart);
+
+    return chart;
+  }
+
   getBarChart(series: any, category: any, options: any) {
     const configuredOption = { ...options };
     console.log('option---', configuredOption);
@@ -466,7 +613,7 @@ export class HighchartService {
         ...defaultSubTitleOptions,
       },
       legend: {
-        enabled: configuredOption?.enableLegends || false,
+        enabled: configuredOption?.enabledLegends || false,
         itemStyle: { ...legendFontSize },
       },
       xAxis: {
@@ -571,7 +718,7 @@ export class HighchartService {
         ...defaultSubTitleOptions,
       },
       legend: {
-        enabled: configuredOption?.enableLegends || false,
+        enabled: configuredOption?.enabledLegends || false,
         itemStyle: { ...legendFontSize },
       },
       xAxis: {
@@ -843,6 +990,12 @@ export class HighchartService {
       series[0].innerSize = '100%';
       series[0].color = '#eee';
     }
+    console.log('donut config', configuredOption);
+    console.log(
+      'configuredOption?.enabledLegends',
+      configuredOption?.enabledLegends
+    );
+
     const chart = {
       chart: {
         marginLeft: configuredOption?.enabledLegends ? -300 : undefined,
@@ -864,7 +1017,7 @@ export class HighchartService {
         y: configuredOption?.subTitle?.length ? 0 : 20,
         x: configuredOption?.enabledLegends
           ? configuredOption?.subTitle?.length
-            ? -130
+            ? -150
             : -155
           : 0,
         ...defaultDonutTitleOptions,
@@ -877,7 +1030,7 @@ export class HighchartService {
         y: configuredOption?.subTitle?.length ? 25 : -20,
         x: configuredOption?.enabledLegends
           ? configuredOption?.subTitle?.length
-            ? -130
+            ? -150
             : -130
           : 0,
         ...defaultDonutSubTitleOptions,
@@ -959,6 +1112,11 @@ export class HighchartService {
               },
               subtitle: {
                 widthAdjust: -800,
+                x: configuredOption?.enabledLegends
+                  ? configuredOption?.subTitle?.length
+                    ? -130
+                    : -130
+                  : 0,
               },
               legend: {
                 x: configuredOption?.dataLabels
@@ -1326,7 +1484,7 @@ export class HighchartService {
                   : -20,
               },
               legend: {
-                verticalAlign: configuredOption ? 'bottom' : 'middle',
+                verticalAlign: configuredOption?.dataLabels ? 'bottom' : 'middle',
                 floating: configuredOption?.dataLabels ? false : true,
                 layout: configuredOption?.dataLabels
                   ? 'horizontal'
@@ -1336,7 +1494,11 @@ export class HighchartService {
                 itemWidth: configuredOption?.dataLabels ? legendItemWidth : 270,
                 padding: configuredOption?.dataLabels ? 8 : 0,
                 itemDistance: configuredOption?.dataLabels ? 5 : 20,
-                x: configuredOption?.dataLabels ? 0 : -80,
+                x: configuredOption?.dataLabels
+                  ? configuredOption?.abbreviateLargeNumber
+                    ? -30
+                    : -16
+                  : -100,
               },
               chart: {
                 marginLeft: configuredOption?.dataLabels
@@ -1405,7 +1567,7 @@ export class HighchartService {
                   : -20,
               },
               legend: {
-                verticalAlign: configuredOption ? 'bottom' : 'middle',
+                verticalAlign: configuredOption?.dataLabels ? 'bottom' : 'middle',
                 floating: configuredOption?.dataLabels ? false : true,
                 layout: configuredOption?.dataLabels
                   ? 'horizontal'
@@ -1484,7 +1646,7 @@ export class HighchartService {
                   : -20,
               },
               legend: {
-                verticalAlign: configuredOption ? 'bottom' : 'middle',
+                verticalAlign: configuredOption?.dataLabels ? 'bottom' : 'middle',
                 floating: configuredOption?.dataLabels ? false : true,
                 layout: configuredOption?.dataLabels
                   ? 'horizontal'
@@ -1563,7 +1725,7 @@ export class HighchartService {
                   : -20,
               },
               legend: {
-                verticalAlign: configuredOption ? 'bottom' : 'middle',
+                verticalAlign: configuredOption?.dataLabels ? 'bottom' : 'middle',
                 floating: configuredOption?.dataLabels ? false : true,
                 layout: configuredOption?.dataLabels
                   ? 'horizontal'
@@ -1642,7 +1804,7 @@ export class HighchartService {
                   : -20,
               },
               legend: {
-                verticalAlign: configuredOption ? 'bottom' : 'middle',
+                verticalAlign: configuredOption?.dataLabels ? 'bottom' : 'middle',
                 floating: configuredOption?.dataLabels ? false : true,
                 layout: configuredOption?.dataLabels
                   ? 'horizontal'
@@ -1984,7 +2146,7 @@ export class HighchartService {
       },
       series: series,
     };
-    console.log('chart is', chart);
+    console.log('donut chart is', chart);
 
     return chart;
   }
@@ -3251,5 +3413,75 @@ const APPDATAMnemonic = [
     key: 'earning_specialAllowance',
     displayName: 'Special Allowance',
     color: '#40a368',
+  },
+
+  {
+    key: 'expenditure_rent',
+    displayName: 'Rent',
+    color: '#cf4944',
+  },
+  {
+    key: 'expenditure_groceries',
+    displayName: 'Groceries',
+    color: '#a58e61',
+  },
+  {
+    key: 'expenditure_schoolFees',
+    displayName: 'School Fees',
+    color: '#8f876b',
+  },
+
+  {
+    key: 'expenditure_electricityBill',
+    displayName: 'Electricity Bill',
+    color: '#54463f',
+  },
+
+  {
+    key: 'expenditure_internetBill',
+    displayName: 'Internet Bill',
+    color: '#00619d',
+  },
+
+  {
+    key: 'expenditure_TravelTrip',
+    displayName: 'Travel Trip',
+    color: '#6f747b',
+  },
+
+  {
+    key: 'expenditure_creditCardBill',
+    displayName: 'Credit Card Bill',
+    color: '#3b3f66',
+  },
+
+  {
+    key: 'expenditure_medicalExpense',
+    displayName: 'Medical Expense',
+    color: '#519ea1',
+  },
+
+  {
+    key: 'expenditure_miscellaneous',
+    displayName: 'Miscellaneous',
+    color: '#d3e0b1',
+  },
+
+  {
+    key: 'expenditure_mobileBill',
+    displayName: 'Mobile Bill',
+    color: '#660000',
+  },
+
+  {
+    key: 'expenditure_restaurantAndMovie',
+    displayName: 'Restaurant & Movie',
+    color: '#c7a384',
+  },
+
+  {
+    key: 'expenditure_fuelandTransportation',
+    displayName: 'Fuel & Transportation',
+    color: '#bb5522',
   },
 ];

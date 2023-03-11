@@ -10,6 +10,8 @@ import { DashboardComponent } from './Page/dashboard/dashboard.component';
 import { DummyComponent } from './dummy/dummy.component';
 import { NetIncomeComponent } from './Page/net-income/net-income.component';
 import { EarningCompositionComponent } from './earning-composition/earning-composition.component';
+import { MonthlyExpenditureComponent } from './monthly-expenditure/monthly-expenditure.component';
+import { MoMExpenditureComponent } from './momExpenditure/momExpenditure.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { EarningCompositionComponent } from './earning-composition/earning-compo
     DummyComponent,
     NetIncomeComponent,
     EarningCompositionComponent,
+    MonthlyExpenditureComponent,
+    MoMExpenditureComponent,
   ],
   imports: [
     BrowserModule,
