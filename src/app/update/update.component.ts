@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-update',
@@ -6,8 +7,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./update.component.scss']
 })
 export class UpdateComponent implements OnInit {
+  constructor(private router:Router){
 
+  }
   ngOnInit(): void {
     const  checkAccess =  prompt("Enter password to unlock admin feature")
+    console.log("check Access",checkAccess);
+    if(checkAccess===null){
+      alert('Action cancelled, redirecting to dashboard.')
+      this.router.navigate(['./dashboard'])
+    }
+    
   }
 }
