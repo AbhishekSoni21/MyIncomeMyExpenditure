@@ -667,11 +667,11 @@ export class HighchartService {
             },
             chartOptions: {
               legend: {
-                width: '100%',
+                // width: '100%',
                 itemWidth: 150,
-                alignColumns: true,
-                align: 'right',
-                layout: 'horizontal',
+                // alignColumns: true,
+                // align: 'right',
+                // layout: 'horizontal',
                 // x:100
               },
             },
