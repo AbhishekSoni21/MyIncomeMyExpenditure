@@ -68,7 +68,7 @@ export class HighchartService {
       yAxisTitle: data?.options?.chartProperties?.yAxisTitle,
       xAxisTitle: data?.options?.chartProperties?.xAxisTitle,
       enableLegends: data?.options?.chartProperties?.enabledLegends,
-      formatValue:data?.options?.chartProperties?.formatValue||false,
+      formatValue: data?.options?.chartProperties?.formatValue || false,
       dataLabels:
         data?.options?.chartProperties?.dataSeriesValues?.enabledDataLabel,
       abbreviateLargeNumber:
@@ -77,12 +77,7 @@ export class HighchartService {
     };
   }
 
-  createGraph(
-    array: any[],
-    series: any[],
-    categories: any[],
-    options: any,
-  ) {
+  createGraph(array: any[], series: any[], categories: any[], options: any) {
     const configuredOption = { ...options };
     const category = [...categories];
     // const category: any[] = [
@@ -174,20 +169,23 @@ export class HighchartService {
     }
   }
 
-  getColumnSeriesData(
-    array: any[],
-    series: any[],
-  ) {
+  getColumnSeriesData(array: any[], series: any[]) {
     if (!series) {
       return null;
     }
     const barSeries = series.map((serie) => {
       return {
-        name: APPDATAMnemonic.filter(value=>value.key===serie)[0]?.['displayName'] ||'',
+        name:
+          APPDATAMnemonic.filter((value) => value.key === serie)[0]?.[
+            'displayName'
+          ] || '',
         data: array
           // .filter((value) => value[seriesName] === serie)
           .map((value) => value[serie]),
-        color:APPDATAMnemonic.filter(value=>value.key===serie)[0]?.['color'] ||''
+        color:
+          APPDATAMnemonic.filter((value) => value.key === serie)[0]?.[
+            'color'
+          ] || '',
       };
     });
     console.log('barseries', barSeries);
@@ -202,9 +200,9 @@ export class HighchartService {
     const barSeries = series.map((serie) => {
       return {
         name: serie,
-        data:  array
-        // .filter((value) => value[seriesName] === serie)
-        .map((value) => value[serie]),
+        data: array
+          // .filter((value) => value[seriesName] === serie)
+          .map((value) => value[serie]),
       };
     });
     console.log('barseries', barSeries);
@@ -219,38 +217,56 @@ export class HighchartService {
     const stackSeries = series.map((serie: any) => {
       if (serie.id) {
         return {
-          name: APPDATAMnemonic.filter(value=>value.key===serie)[0]?.['displayName'] ||'',
-          data:  array
-          // .filter((value) => value[seriesName] === serie)
-          .map((value) => value[serie]),
+          name:
+            APPDATAMnemonic.filter((value) => value.key === serie)[0]?.[
+              'displayName'
+            ] || '',
+          data: array
+            // .filter((value) => value[seriesName] === serie)
+            .map((value) => value[serie]),
           stack: serie.split('_')[0],
           showInLegend: serie.showInLegend,
           id: serie.id,
-          color:APPDATAMnemonic.filter(value=>value.key===serie)[0]?.['color'] ||''
+          color:
+            APPDATAMnemonic.filter((value) => value.key === serie)[0]?.[
+              'color'
+            ] || '',
         };
       } else if (serie.linkedTo) {
         return {
-          name: APPDATAMnemonic.filter(value=>value.key===serie)[0]?.['displayName'] ||'',
-          data:  array
-          // .filter((value) => value[seriesName] === serie)
-          .map((value) => value[serie]),
+          name:
+            APPDATAMnemonic.filter((value) => value.key === serie)[0]?.[
+              'displayName'
+            ] || '',
+          data: array
+            // .filter((value) => value[seriesName] === serie)
+            .map((value) => value[serie]),
           stack: serie.split('_')[0],
           showInLegend: serie.showInLegend,
           linkedTo: serie.linkedTo,
-          color:APPDATAMnemonic.filter(value=>value.key===serie)[0]?.['color'] ||''
+          color:
+            APPDATAMnemonic.filter((value) => value.key === serie)[0]?.[
+              'color'
+            ] || '',
         };
       } else {
         return {
-          name: APPDATAMnemonic.filter(value=>value.key===serie)[0]?.['displayName'] ||'',
-          data:  array
-          // .filter((value) => value[seriesName] === serie)
-          .map((value) => value[serie]),
+          name:
+            APPDATAMnemonic.filter((value) => value.key === serie)[0]?.[
+              'displayName'
+            ] || '',
+          data: array
+            // .filter((value) => value[seriesName] === serie)
+            .map((value) => value[serie]),
           stack: serie.split('_')[0],
-          color:APPDATAMnemonic.filter(value=>value.key===serie)[0]?.['color'] ||''
+          color:
+            APPDATAMnemonic.filter((value) => value.key === serie)[0]?.[
+              'color'
+            ] || '',
         };
       }
     });
-    console.log("stackSeries",stackSeries);
+    console.log('stackSeries', stackSeries);
 
     return stackSeries;
   }
@@ -355,17 +371,20 @@ export class HighchartService {
         gridLineColor: '#e7e7e8',
       },
       tooltip: {
-        useHTML:true,
-        headerFormat:'',
+        useHTML: true,
+        headerFormat: '',
         pointFormatter: function (this: any) {
           return (
-
-            '<span style="fontSize:14px;fontWeight:bold">'+this.category+'</span><br>'+'<span style="color:>' +
+            '<span style="fontSize:14px;fontWeight:bold">' +
+            this.category +
+            '</span><br>' +
+            '<span style="color:>' +
             this.series.color +
             ';"></span><span style="fontSize:12px">' +
             this.series.name +
             ':' +
-            (configuredOption?.formatValue?'<i class="fa fa-inr"></i>':'')+ this.y +
+            (configuredOption?.formatValue ? '<i class="fa fa-inr"></i>' : '') +
+            this.y +
             '</b></span><br/>'
           );
         },
@@ -387,7 +406,7 @@ export class HighchartService {
             x: -2,
             y: -5,
             formatter: function (this: any) {
-              return (configuredOption?.formatValue?'₹':'') + this.y;
+              return (configuredOption?.formatValue ? '₹' : '') + this.y;
             },
             style: {
               ...dataLabelStyle,
@@ -396,22 +415,27 @@ export class HighchartService {
           },
         },
       },
-      responsive: {
-        rules: [
-          {
-            condition: { maxWidth: 768 },
-            chartOptions: {
-              plotOptions: {
-                series: {
-                  dataLabels: {
-                    enabled: false,
-                  },
-                },
-              },
-          },
-        }
-        ],
-      },
+      // responsive: {
+      //   rules: [
+      //     {
+      //       condition: {
+      //         maxWidth: 768,
+      //       },
+      //       chartOptions: {
+      //         title:{
+      //           text:'small'
+      //         },
+      //         legend: {
+      //           width: '100%',
+      //           itemWidth: 150,
+      //           alignColumns: false,
+      //           layout: 'horizontal',
+      //         },
+      //       },
+      //     },
+      //   ],
+      // },
+
       series: series,
     };
     console.log('Column chart is', chart);
@@ -477,8 +501,8 @@ export class HighchartService {
         gridLineColor: '#e7e7e8',
       },
       tooltip: {
-        useHTML:true,
-        headerFormat:'',
+        useHTML: true,
+        headerFormat: '',
         pointFormatter: function (this: any) {
           return (
             '<span style="color:>' +
@@ -550,10 +574,6 @@ export class HighchartService {
       },
       legend: {
         enabled: configuredOption?.enableLegends || false,
-        // layout: 'horizontal',
-        // align: 'center',
-        // verticalAlign: 'bottom',
-        // backgroundColor: '#FFFFFF',
         itemStyle: { ...legendFontSize },
       },
       xAxis: {
@@ -600,16 +620,20 @@ export class HighchartService {
           : undefined,
       },
       tooltip: {
-        useHTML:true,
-        headerFormat:'',
+        useHTML: true,
+        headerFormat: '',
         pointFormatter: function (this: any) {
           return (
-            '<span style="fontSize:14px;fontWeight:bold">'+this.category+'</span><br>'+'<span style="color:>' +
+            '<span style="fontSize:14px;fontWeight:bold">' +
+            this.category +
+            '</span><br>' +
+            '<span style="color:>' +
             this.series.color +
             ';"></span><span style="fontSize:12px">' +
             this.series.name +
             ':' +
-            (configuredOption?.formatValue?'<i class="fa fa-inr"></i>':'')+ this.y +
+            (configuredOption?.formatValue ? '<i class="fa fa-inr"></i>' : '') +
+            this.y +
             '</b></span><br/>'
           );
         },
@@ -620,7 +644,7 @@ export class HighchartService {
           dataLabels: {
             enabled: configuredOption?.dataLabels || false,
             formatter: function (this: any) {
-              return (configuredOption?.formatValue?'₹':'') + this.y;
+              return (configuredOption?.formatValue ? '₹' : '') + this.y;
             },
             style: {
               ...dataLabelStyle,
@@ -635,35 +659,31 @@ export class HighchartService {
             offsetY: '2',
           },
         },
-        series: {
-          // dataLabels: {
-          //   allowOverlap: true,
-          //   crop: false,
-          //   overflow: "none",
-          //   rotation: -90,
-          //   position: "top",
-          //   align: 'left',
-          //   x: -2,
-          //   y: -5,
-          //   formatter: function (this: any) {
-          //     return this.y;
-          //   },
-          //   style: {
-          //     ...dataLabelStyle,
-          //   },
-          //   enabled: configuredOption?.dataLabels || false,
-          // },
-          // tooltip: {
-          //   headerFormat:
-          //     '<span style="font-size:10px"><b>{point.key}</b></span><br/>',
-          //   pointFormat:
-          //     '<span style="color:{point.color}">.</span>{series.name}:{point.y:.0f}<br/>',
-          // },
-        },
+
+      },
+
+      responsive: {
+        rules: [
+          {
+            condition: {
+              maxWidth: 768,
+            },
+            chartOptions: {
+              legend: {
+                width: '100%',
+                itemWidth: 150,
+                alignColumns: true,
+                align: 'right',
+                layout: 'horizontal',
+                // x:100
+              },
+            },
+          },
+        ],
       },
       series: series,
     };
-    console.log('Bar Grouped chart is', chart);
+    console.log('Bar Grouped chart is---', chart);
 
     return chart;
   }
@@ -3209,19 +3229,30 @@ const APPDATAMnemonic = [
   { key: 'BerlinRainfall', displayName: 'Berlin' },
   { key: 'LondonRainfall', displayName: 'London' },
 
-  { key: 'netIncome', displayName: 'Net Income' ,color:'#cb9d06'},
-  { key: 'grossIncome', displayName: 'Gross Income',color:'#2f8351' },
+  { key: 'netIncome', displayName: 'Net Income', color: '#cb9d06' },
+  { key: 'grossIncome', displayName: 'Gross Income', color: '#2f8351' },
 
-  { key: 'deduction_netIncome', displayName: 'Net Income' ,color:'#cb9d06'},
-  { key: 'deduction_IncomeTaxDedcution', displayName: 'Income Tax Dedcution',color:'#cdbb63' },
-  { key: 'deduction_ProfessionTax', displayName: 'Profession Tax',color:'#ffdb58' },
-  { key: 'deduction_ProvidentFund', displayName: 'Provident Fund',color:'#f49f35' },
-  { key: 'earning_basic', displayName: 'Basic',color:'#3e6334' },
-  { key: 'earning_hra', displayName: 'HRA',color:'#72a355' },
-  { key: 'earning_specialAllowance', displayName: 'Special Allowance',color:'#40a368' },
-
-
-
-
-
+  { key: 'deduction_netIncome', displayName: 'Net Income', color: '#cb9d06' },
+  {
+    key: 'deduction_IncomeTaxDedcution',
+    displayName: 'Income Tax Dedcution',
+    color: '#cdbb63',
+  },
+  {
+    key: 'deduction_ProfessionTax',
+    displayName: 'Profession Tax',
+    color: '#ffdb58',
+  },
+  {
+    key: 'deduction_ProvidentFund',
+    displayName: 'Provident Fund',
+    color: '#f49f35',
+  },
+  { key: 'earning_basic', displayName: 'Basic', color: '#3e6334' },
+  { key: 'earning_hra', displayName: 'HRA', color: '#72a355' },
+  {
+    key: 'earning_specialAllowance',
+    displayName: 'Special Allowance',
+    color: '#40a368',
+  },
 ];
