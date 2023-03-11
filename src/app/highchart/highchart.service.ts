@@ -415,26 +415,24 @@ export class HighchartService {
           },
         },
       },
-      // responsive: {
-      //   rules: [
-      //     {
-      //       condition: {
-      //         maxWidth: 768,
-      //       },
-      //       chartOptions: {
-      //         title:{
-      //           text:'small'
-      //         },
-      //         legend: {
-      //           width: '100%',
-      //           itemWidth: 150,
-      //           alignColumns: false,
-      //           layout: 'horizontal',
-      //         },
-      //       },
-      //     },
-      //   ],
-      // },
+      responsive: {
+        rules: [
+          {
+            condition: {
+              maxWidth: 768,
+            },
+            chartOptions: {
+              plotOptions: {
+                series: {
+                  dataLabels: {
+                    enabled: false,
+                  },
+                },
+              },
+            },
+          },
+        ],
+      },
 
       series: series,
     };
@@ -659,7 +657,6 @@ export class HighchartService {
             offsetY: '2',
           },
         },
-
       },
 
       responsive: {
