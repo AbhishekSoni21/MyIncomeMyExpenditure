@@ -316,6 +316,10 @@ export class HighchartService {
                   'displayName'
                 ] || '',
               y: row[serie],
+              color:
+              APPDATAMnemonic.filter((value) => value.key === serie)[0]?.[
+                'color'
+              ] || '',
             });
           });
           // array.map((row) => {
@@ -575,6 +579,14 @@ export class HighchartService {
                     enabled: false,
                   },
                 },
+              },
+              legend: {
+                // width: '100%',
+                itemWidth: 150,
+                // alignColumns: true,
+                // align: 'right',
+                // layout: 'horizontal',
+                // x:100
               },
             },
           },
