@@ -550,10 +550,10 @@ export class HighchartService {
       },
       legend: {
         enabled: configuredOption?.enableLegends || false,
-        layout: 'horizontal',
-        align: 'center',
-        verticalAlign: 'bottom',
-        backgroundColor: '#FFFFFF',
+        // layout: 'horizontal',
+        // align: 'center',
+        // verticalAlign: 'bottom',
+        // backgroundColor: '#FFFFFF',
         itemStyle: { ...legendFontSize },
       },
       xAxis: {
