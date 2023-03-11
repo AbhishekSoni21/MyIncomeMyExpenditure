@@ -35,34 +35,34 @@ export class DashboardComponent implements OnInit {
   };
 
   options!: any;
-  series = [
-    {
-      name: 'Tokyo',
-      data: [
-        49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1,
-        95.6, 54.4,
-      ],
-    },
-    {
-      name: 'New York',
-      data: [
-        83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6,
-        92.3,
-      ],
-    },
-    {
-      name: 'London',
-      data: [
-        48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2,
-      ],
-    },
-    {
-      name: 'Berlin',
-      data: [
-        42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1,
-      ],
-    },
-  ];
+  // series = [
+  //   {
+  //     name: 'Tokyo',
+  //     data: [
+  //       49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1,
+  //       95.6, 54.4,
+  //     ],
+  //   },
+  //   {
+  //     name: 'New York',
+  //     data: [
+  //       83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6,
+  //       92.3,
+  //     ],
+  //   },
+  //   {
+  //     name: 'London',
+  //     data: [
+  //       48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2,
+  //     ],
+  //   },
+  //   {
+  //     name: 'Berlin',
+  //     data: [
+  //       42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1,
+  //     ],
+  //   },
+  // ];
   rowData = [
     { city: 'Tokyo', month: 'Jan', rainfall: 49.9 },
     { city: 'Tokyo', month: 'Feb', rainfall: 71.5 },
@@ -75,7 +75,7 @@ export class DashboardComponent implements OnInit {
     { city: 'Tokyo', month: 'Sep', rainfall: 216.4 },
     { city: 'Tokyo', month: 'Oct', rainfall: 194.1 },
     { city: 'Tokyo', month: 'Nov', rainfall: 95.6 },
-    { city: 'Tokyo', month: 'Dev', rainfall: 54.4 },
+    { city: 'Tokyo', month: 'Dec', rainfall: 54.4 },
 
     { city: 'New York', month: 'Jan', rainfall: 83.6 },
     { city: 'New York', month: 'Feb', rainfall: 78.8 },
@@ -88,7 +88,7 @@ export class DashboardComponent implements OnInit {
     { city: 'New York', month: 'Sep', rainfall: 91.2 },
     { city: 'New York', month: 'Oct', rainfall: 83.5 },
     { city: 'New York', month: 'Nov', rainfall: 106.6 },
-    { city: 'New York', month: 'Dev', rainfall: 92.3 },
+    { city: 'New York', month: 'Dec', rainfall: 92.3 },
 
     { city: 'London', month: 'Jan', rainfall: 48.9 },
     { city: 'London', month: 'Feb', rainfall: 38.8 },
@@ -101,7 +101,7 @@ export class DashboardComponent implements OnInit {
     { city: 'London', month: 'Sep', rainfall: 52.4 },
     { city: 'London', month: 'Oct', rainfall: 65.2 },
     { city: 'London', month: 'Nov', rainfall: 59.3 },
-    { city: 'London', month: 'Dev', rainfall: 51.2 },
+    { city: 'London', month: 'Dec', rainfall: 51.2 },
 
     { city: 'Berlin', month: 'Jan', rainfall: 42.4 },
     { city: 'Berlin', month: 'Feb', rainfall: 33.2 },
@@ -114,16 +114,41 @@ export class DashboardComponent implements OnInit {
     { city: 'Berlin', month: 'Sep', rainfall: 47.6 },
     { city: 'Berlin', month: 'Oct', rainfall: 39.1 },
     { city: 'Berlin', month: 'Nov', rainfall: 46.8 },
-    { city: 'Berlin', month: 'Dev', rainfall: 51.1 },
+    { city: 'Berlin', month: 'Dec', rainfall: 51.1 },
   ];
   // , 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4,
   // 194.1, 95.6, 54.4
   createGraph() {
-    const series = ['Tokyo', 'New York', 'Berlin', 'London'];
-    const defaultProperties= this.highChartService.setHighchartOption(this.highchartProperties)
+    const formattedData:any[]=[];
+    this.rowData.map(value=>{
+      const index=formattedData.findIndex((data:any)=>data.month===value.month)
+      if(index!==-1){
+        const tempKey=value.city.replace(' ','')+'Rainfall'
+        formattedData[index][tempKey]=value.rainfall
+      }else{
+        const tempKey=value.city+'Rainfall'
+        formattedData.push({
+          month:value.month,
+          [tempKey]:value.rainfall
+
+        })
+      }
+    })
+    console.log("formatteddata",formattedData);
+
+    const uniqueSeries=[...new Set(this.rowData.map(value=>value.city))]
+    console.log("unique series",uniqueSeries);
+
+    const modifiedSeries=uniqueSeries.map(value=>value.replace(' ','')+'Rainfall')
+    const series = [...modifiedSeries];
+    const category:any[] = formattedData.map(value=>value.month);
+    const defaultProperties = this.highChartService.setHighchartOption(
+      this.highchartProperties
+    );
     this.options = this.highChartService.createGraph(
-      this.rowData,
+      formattedData,
       series,
+      category,
       defaultProperties
     );
   }

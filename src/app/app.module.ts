@@ -8,6 +8,8 @@ import { ReusableComponentModule } from './ReusableComponent/reusable-component.
 import { NavbarComponent } from './navbar/navbar.component';
 import { DashboardComponent } from './Page/dashboard/dashboard.component';
 import { DummyComponent } from './dummy/dummy.component';
+import { NetIncomeComponent } from './Page/net-income/net-income.component';
+import { EarningCompositionComponent } from './earning-composition/earning-composition.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +17,8 @@ import { DummyComponent } from './dummy/dummy.component';
     NavbarComponent,
     DashboardComponent,
     DummyComponent,
+    NetIncomeComponent,
+    EarningCompositionComponent,
   ],
   imports: [
     BrowserModule,
