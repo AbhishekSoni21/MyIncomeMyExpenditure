@@ -9,6 +9,8 @@ import { NETBALANCE } from './mockData';
 })
 export class MonthlyExpenditureComponent {
   constructor(private highChartService: HighchartService) {}
+  monthName='';
+  currentYear:number=new Date().getFullYear();
   ngOnInit() {
     // this.createGraph();
     this.loadData();
@@ -86,6 +88,21 @@ export class MonthlyExpenditureComponent {
       'Dec',
     ];
 
+    const monthsList:{key:string,value:string}[] = [
+      {key:'Jan',value:'January'},
+      {key:'Feb',value:'February'},
+      {key:'Mar',value:'March'},
+      {key:'Apr',value:'April'},
+      {key:'May',value:'May'},
+      {key:'Jun',value:'June'},
+      {key:'Jul',value:'July'},
+      {key:'Aug',value:'August'},
+      {key:'Sep',value:'September'},
+      {key:'Oct',value:'October'},
+      {key:'Nov',value:'Novemeber'},
+      {key:'Dec',value:'December'}
+    ];
+
     const sortedData = data.sort((a: any, b: any) => {
       if (a.year != b.year) {
         return a.year - b.year;
@@ -121,6 +138,8 @@ export class MonthlyExpenditureComponent {
         ' ' +
         value?.month
     );
+    this.monthName=monthsList.filter(value=>value.key===filteredRecord[0].month).map(mon=>mon.value)[0]
+    this.currentYear=filteredRecord[0].year
     this.options = this.highChartService.createGraph(
       [filteredRecord[0]],
       series,

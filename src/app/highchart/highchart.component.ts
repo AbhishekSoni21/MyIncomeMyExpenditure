@@ -8,6 +8,7 @@ import * as Highchart from 'highcharts'
 export class HighchartComponent {
   Highcharts = Highchart;
   private _options:any
+  private _height='500px'
   // linechart: any = {
   //   series: [
   //     {
@@ -21,6 +22,15 @@ export class HighchartComponent {
   //     text: 'linechart',
   //   },
   // };
+
+  @Input()
+  set height(value:any){
+    this._height=value
+  }
+
+  get height(){
+    return this._height;
+  }
 
   @Input()
   set options(value:any){

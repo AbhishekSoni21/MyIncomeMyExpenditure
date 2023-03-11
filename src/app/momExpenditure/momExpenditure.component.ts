@@ -22,7 +22,7 @@ export class MoMExpenditureComponent {
     },
     options: {
       chartProperties: {
-        title: 'Monthly Earning Composition',
+        title: 'Month on Month Expenditure',
         subTitle: '',
         showTotal: false,
         yAxisTitle: 'Amount in ₹',
