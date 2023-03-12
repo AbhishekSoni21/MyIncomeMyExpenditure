@@ -26,7 +26,6 @@ export class EarningCompositionComponent {
       this.loadData();
       
     });
-    console.log("*****************************",this.appService.selectedYear.value);
     
   }
 
@@ -76,7 +75,6 @@ export class EarningCompositionComponent {
       value['grossIncome'] = (earningTotal || 0) + (deductionTotal || 0);
       return value;
     });
-    console.log('earning composition data is', data);
     this.createGraph(data);
   }
 
@@ -103,14 +101,11 @@ export class EarningCompositionComponent {
         return months.indexOf(a.month)- months.indexOf(b.month)
       }
     })
-    console.log("sorted data",sortedData)
     const filteredRecord = sortedData.filter(
       (value:any) => value.year === this.appService.selectedYear.value
     );;
-    console.log("filteredRecord data",filteredRecord)
-    const ignoredSeries=['deduction','earning','grossIncome','year','month']
+    const ignoredSeries=['deduction','earning','grossIncome','year','month','expenditure']
     const series = Object.keys(filteredRecord[0]).filter(value=>ignoredSeries.indexOf(value)===-1)
-    console.log("***series",series);
 
     const defaultProperties = this.highChartService.setHighchartOption(
       this.highchartProperties,this.selectedYear

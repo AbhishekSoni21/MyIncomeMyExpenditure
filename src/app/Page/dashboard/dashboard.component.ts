@@ -134,10 +134,8 @@ export class DashboardComponent implements OnInit {
         })
       }
     })
-    console.log("formatteddata",formattedData);
 
     const uniqueSeries=[...new Set(this.rowData.map(value=>value.city))]
-    console.log("unique series",uniqueSeries);
 
     const modifiedSeries=uniqueSeries.map(value=>value.replace(' ','')+'Rainfall')
     const series = [...modifiedSeries];

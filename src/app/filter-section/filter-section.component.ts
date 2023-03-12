@@ -31,7 +31,6 @@ export class FilterSectionComponent implements OnInit {
         return MONTHS.indexOf(a.month) - MONTHS.indexOf(b.month);
       }
     });
-    console.log('sorted data', sortedData);
     const tempOption: FilterModal[] = [];
     sortedData.map((val: any) => {
       const isPresent = tempOption.filter((value) => value.key === val.year);
@@ -45,18 +44,12 @@ export class FilterSectionComponent implements OnInit {
     });
     this.yearData = [...tempOption.reverse()];
     this.selectedYearValue = this.yearData[0];
-    console.log('year----data', this.yearData);
     this.allData=sortedData;
     this.appService.selectedYear=this.selectedYearValue?.key
    this.getMonth(sortedData)
   }
 
   handleFilterChange(e: any, data: any, filtertype: any) {
-    console.log('this.monthData', this.monthData);
-    console.log('year', this.yearData);
-    console.log('e', e);
-    console.log('data', data);
-    console.log('filter',filtertype)
     if(e.isUserInput){
       if(filtertype==='year'){
         this.selectedYearValue=data;
@@ -72,7 +65,6 @@ export class FilterSectionComponent implements OnInit {
   }
 
   getMonth(sortedData:any){
-    console.log("this.monthdata----",sortedData);
 
     this.monthData = sortedData
     .filter((val: any) => val.year === this.selectedYearValue['key'])
@@ -80,8 +72,6 @@ export class FilterSectionComponent implements OnInit {
       return { key: data.month, value: data.month };
     }).sort((a:any,b:any)=> {return MONTHSLIST.indexOf(a.month) - MONTHS.indexOf(b.month)});
 
-  console.log('this.monthData', this.monthData);
-  console.log('year', this.yearData);
 
   this.selectedMonthValue = this.monthData.reverse()[0];
   this.appService.selectedMonth=this.selectedMonthValue?.key

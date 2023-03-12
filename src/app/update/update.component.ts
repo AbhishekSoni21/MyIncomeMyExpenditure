@@ -12,7 +12,6 @@ export class UpdateComponent implements OnInit {
   }
   ngOnInit(): void {
     const  checkAccess =  prompt("Enter password to unlock admin feature")
-    console.log("check Access",checkAccess);
     if(checkAccess===null){
       alert('Action cancelled, redirecting to dashboard.')
       this.router.navigate(['./dashboard'])

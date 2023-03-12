@@ -70,7 +70,6 @@ export class NetIncomeComponent {
       value['grossIncome'] = (earningTotal || 0) + (deductionTotal || 0);
       return value;
     });
-    console.log('data is', data);
     this.createGraph(data);
   }
 
@@ -100,9 +99,7 @@ export class NetIncomeComponent {
     const filteredData=sortedData.filter(
       (value:any) => value.year === this.appService.selectedYear.value
     );
-    console.log("sorted data",filteredData)
     const filteredRecord = filteredData;
-    console.log("filteredRecord data",filteredRecord)
     const series = ['grossIncome','netIncome'];
     const defaultProperties = this.highChartService.setHighchartOption(
       this.highchartProperties,this.selectedYear

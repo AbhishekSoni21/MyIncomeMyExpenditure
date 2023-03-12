@@ -194,7 +194,7 @@ export class HighchartService {
           ] || '',
       };
     });
-    console.log('barseries', barSeries);
+    console.log('column series data', barSeries);
 
     return barSeries;
   }
@@ -211,7 +211,7 @@ export class HighchartService {
           .map((value) => value[serie]),
       };
     });
-    console.log('barseries', barSeries);
+    console.log('barseries data', barSeries);
 
     return barSeries;
   }
@@ -272,7 +272,7 @@ export class HighchartService {
         };
       }
     });
-    console.log('stackSeries', stackSeries);
+    console.log('Stack Group Bar Series data', stackSeries);
 
     return stackSeries;
   }
@@ -337,8 +337,6 @@ export class HighchartService {
 
   getColumnChart(series: any, category: any, options: any) {
     const configuredOption = { ...options };
-    console.log('option---', configuredOption);
-    console.log('cateogry', category);
 
     const chart = {
       chart: {
@@ -465,8 +463,6 @@ export class HighchartService {
 
   getStackColumnChart(series: any, category: any, options: any) {
     const configuredOption = { ...options };
-    console.log('option---', configuredOption);
-    console.log('cateogry', category);
 
     const chart = {
       chart: {
@@ -602,8 +598,6 @@ export class HighchartService {
 
   getBarChart(series: any, category: any, options: any) {
     const configuredOption = { ...options };
-    console.log('option---', configuredOption);
-    console.log('cateogry', category);
 
     const chart = {
       chart: {
@@ -700,15 +694,13 @@ export class HighchartService {
       },
       series: series,
     };
-    console.log('chart is', chart);
+    console.log('Bar Chart is', chart);
 
     return chart;
   }
 
   getBarGroupedChart(series: any, category: any, options: any) {
     const configuredOption = { ...options };
-    console.log('option---', configuredOption);
-    console.log('cateogry', category);
 
     const chart = {
       chart: {
@@ -909,7 +901,7 @@ export class HighchartService {
       },
       series: series,
     };
-    console.log('chart is ', chart);
+    console.log('Line chart is ', chart);
     return chart;
   }
 
@@ -987,7 +979,7 @@ export class HighchartService {
       },
       series: series,
     };
-    console.log('chart is ', chart);
+    console.log('Stack Line chart is ', chart);
     return chart;
   }
 
@@ -1002,11 +994,6 @@ export class HighchartService {
       series[0].innerSize = '100%';
       series[0].color = '#eee';
     }
-    console.log('donut config', configuredOption);
-    console.log(
-      'configuredOption?.enabledLegends',
-      configuredOption?.enabledLegends
-    );
 
     const chart = {
       chart: {
@@ -2159,7 +2146,7 @@ export class HighchartService {
       },
       series: series,
     };
-    console.log('donut chart is', chart);
+    console.log('Donut chart is', chart);
 
     return chart;
   }
@@ -3265,7 +3252,7 @@ export class HighchartService {
       },
       series: series,
     };
-    console.log('chart is', chart);
+    console.log('Semi Donut chart is', chart);
 
     return chart;
   }
@@ -3359,7 +3346,7 @@ export class HighchartService {
       },
       series: series,
     };
-    console.log('chart is', chart);
+    console.log('Pie chart is', chart);
     return chart;
   }
 
