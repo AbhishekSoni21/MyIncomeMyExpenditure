@@ -2,7 +2,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import {MatSelectModule} from '@angular/material/select';
 
 
 @NgModule({
@@ -10,11 +10,14 @@ import { CommonModule } from '@angular/common';
   imports: [
     CommonModule,
     BrowserAnimationsModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatSelectModule,
+    
 
   ],
   exports:[
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatSelectModule,
   ]
 })
 export class AngularMaterialModule { }

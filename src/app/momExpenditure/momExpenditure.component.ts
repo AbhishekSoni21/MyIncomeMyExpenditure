@@ -1,6 +1,6 @@
 import { HighchartService } from './../highchart/highchart.service';
 import { Component } from '@angular/core';
-import { NETBALANCE } from './mockData';
+import { NETBALANCE } from '../highchart/mockData';
 
 @Component({
   selector: 'app-momExpenditure',
@@ -40,7 +40,8 @@ export class MoMExpenditureComponent {
 
   loadData() {
     // formattedData=[];
-    const data = NETBALANCE.map((value: any) => {
+    const widgetData=JSON.parse(JSON.stringify(NETBALANCE))
+    const data = widgetData.map((value: any) => {
       const expenditure = Object.keys(value.expenditure);
       // const deductionKey = Object.keys(value.deduction);
       // const earningKey = Object.keys(value.earning);

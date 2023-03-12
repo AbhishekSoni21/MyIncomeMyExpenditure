@@ -1021,7 +1021,7 @@ export class HighchartService {
       // colors:[],
       title: {
         text: configuredOption?.showTotal
-          ? total
+          ?  '₹'+total
           : configuredOption?.title || null,
         align: 'center',
         verticalAlign: 'middle',
@@ -1064,22 +1064,23 @@ export class HighchartService {
           : -450,
       },
       tooltip: {
+        useHTML: true,
+        // headerFormat: '',
         pointFormatter: function (this: any) {
           return (
-            '<span style="color:' +
-            this.series.color +
-            ';">.</span>' +
-            '<span style="fontSize:14px"><span style="fontWeight:400">' +
-            this.series.name +
+            '<span style="fontSize:14px;fontWeight:bold">' +
             '</span>' +
-            ':<b>' +
-            '&nbsp' +
-            '<span style:"fontWeight:900">' +
+            '<span style="color:>' +
+            this.series.color +
+            ';"></span><span style="fontSize:12px">' +
+            this.series.name +
+            ':' +
+            (configuredOption?.formatValue ? '<i class="fa fa-inr"></i>' : '') +
             this.y +
-            '</span></span>' +
-            '</b><br/>'
+            '</b></span><br/>'
           );
         },
+        
       },
       plotOptions: {
         pie: {
@@ -1852,8 +1853,8 @@ export class HighchartService {
               title: {
                 text: configuredOption?.showTotal
                   ? configuredOption?.abbreviateLargeNumber
-                    ? total
-                    : total
+                    ? '₹'+total
+                    : '₹'+total
                   : configuredOption?.title || null,
                 align: 'center',
                 verticalAlign: 'middle',

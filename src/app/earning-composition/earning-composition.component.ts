@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HighchartService } from '../highchart/highchart.service';
-import { NETBALANCE } from './mockData';
+import { NETBALANCE } from '../../app/highchart/mockData';
+
 
 @Component({
   selector: 'app-earning-composition',
@@ -41,8 +42,9 @@ export class EarningCompositionComponent {
   options!: any;
 
   loadData() {
-    // formattedData=[];
-    const data = NETBALANCE.map((value: any) => {
+    // formattedData=[]; 
+    const widgetData=JSON.parse(JSON.stringify(NETBALANCE))
+    const data = widgetData.map((value: any) => {
       const deductionKey = Object.keys(value.deduction);
       const earningKey = Object.keys(value.earning);
       let earningTotal = 0;
