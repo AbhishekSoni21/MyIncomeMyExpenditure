@@ -57,12 +57,12 @@ const dataLabelStyle = {
 export class HighchartService {
   constructor() {}
 
-  setHighchartOption(data: any) {
+  setHighchartOption(data: any,selectedYear='') {
     return {
       type: data?.properties?.chartType,
       category: data?.properties?.category || [],
       series: data?.properties?.series || [],
-      title: data?.options?.chartProperties?.title,
+      title: selectedYear+data?.options?.chartProperties?.title,
       subTitle: data?.options?.chartProperties?.subTitle,
       showTotal: data?.options?.chartProperties?.showTotal,
       yAxisTitle: data?.options?.chartProperties?.yAxisTitle,
@@ -1026,7 +1026,7 @@ export class HighchartService {
         align: 'center',
         verticalAlign: 'middle',
         widthAdjust: -1000,
-        y: configuredOption?.subTitle?.length ? 0 : 20,
+        y: configuredOption?.subTitle?.length ? 10 : 20,
         x: configuredOption?.enabledLegends
           ? configuredOption?.subTitle?.length
             ? -150
@@ -1039,7 +1039,7 @@ export class HighchartService {
         align: 'center',
         verticalAlign: 'middle',
         widthAdjust: -1000,
-        y: configuredOption?.subTitle?.length ? 25 : -20,
+        y: configuredOption?.subTitle?.length ? 30 : -20,
         x: configuredOption?.enabledLegends
           ? configuredOption?.subTitle?.length
             ? -150

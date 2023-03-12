@@ -1,3 +1,4 @@
+import { AppServiceService } from './../app-service.service';
 import { Component } from '@angular/core';
 import { HighchartService } from '../highchart/highchart.service';
 import { NETBALANCE } from '../../app/highchart/mockData';
@@ -9,12 +10,24 @@ import { NETBALANCE } from '../../app/highchart/mockData';
   styleUrls: ['./earning-composition.component.scss']
 })
 export class EarningCompositionComponent {
-  constructor(private highChartService:HighchartService){
+  selectedYear=''
+  constructor(private highChartService:HighchartService,private appService:AppServiceService){
 
   }
   ngOnInit() {
+    this.selectedYear=this.appService.selectedYear.value.toString()
     // this.createGraph();
     this.loadData();
+    this.appService.selectedYear.subscribe((value: any) => {
+      this.selectedYear=this.appService.selectedYear.value.toString()
+      this.loadData();
+    });
+    this.appService.selectedMonth.subscribe((value: any) => {
+      this.loadData();
+      
+    });
+    console.log("*****************************",this.appService.selectedYear.value);
+    
   }
 
   highchartProperties = {
@@ -25,7 +38,7 @@ export class EarningCompositionComponent {
     },
     options: {
       chartProperties: {
-        title: 'Monthly Earning Composition',
+        title:' - Monthly Earning Composition',
         subTitle: '',
         showTotal: false,
         yAxisTitle: 'Amount in ₹',
@@ -91,14 +104,16 @@ export class EarningCompositionComponent {
       }
     })
     console.log("sorted data",sortedData)
-    const filteredRecord = sortedData.reverse().slice(0,12).reverse();
+    const filteredRecord = sortedData.filter(
+      (value:any) => value.year === this.appService.selectedYear.value
+    );;
     console.log("filteredRecord data",filteredRecord)
     const ignoredSeries=['deduction','earning','grossIncome','year','month']
     const series = Object.keys(filteredRecord[0]).filter(value=>ignoredSeries.indexOf(value)===-1)
     console.log("***series",series);
 
     const defaultProperties = this.highChartService.setHighchartOption(
-      this.highchartProperties
+      this.highchartProperties,this.selectedYear
     );
     const categories= filteredRecord.map((value:any)=>'FY'+ ((+months.indexOf(value?.month))>2?(value?.year+1).toString().slice(2):(value?.year).toString().slice(2))+' ' +value?.month)
     this.options = this.highChartService.createGraph(

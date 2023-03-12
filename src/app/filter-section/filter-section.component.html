@@ -1,0 +1,33 @@
+<div class="container-fluid">
+  <div class="row my-5">
+    <label class="section-header-name">Filter Section</label>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <form>
+        <mat-form-field>
+          <mat-label>Select Year</mat-label>
+          <mat-select [ngModel]="selectedYearValue.value" name="year">
+            <mat-option *ngFor="let data of yearData" [value]="data.value" (onSelectionChange)="handleFilterChange($event,data,'year')">
+              {{data.value}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+    </div>
+    <div class="col-md-3">
+      <form>
+        <mat-form-field>
+          <mat-label>Select Month</mat-label>
+          <mat-select [ngModel]="selectedMonthValue.value" name="month">
+            <mat-option *ngFor="let data of monthData" [value]="data.value" (onSelectionChange)="handleFilterChange($event,data,'month')">
+              {{data.value}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        
+        <small><p>*** Month filter will not impact chart showing value for Month on Month comparison</p></small>
+      </form>
+    </div>
+  </div>
+</div>

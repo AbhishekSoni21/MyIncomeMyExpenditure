@@ -1,8 +1,28 @@
-<app-full-page-layout>
-  <app-earning-composition></app-earning-composition>
-</app-full-page-layout>
+<div class="container pb-5">
+  <app-filter-section></app-filter-section>
 
-<!-- <app-half-page-layout>
+  <div class="shadow-effect mb-5">
+    <app-full-page-layout>
+      <app-net-income></app-net-income>
+    </app-full-page-layout>
+  </div>
+  <div class="shadow-effect mb-5">
+    <app-full-page-layout>
+      <app-earning-composition></app-earning-composition>
+    </app-full-page-layout>
+  </div>
+  <div class="shadow-effect mb-5">
+    <app-full-page-layout>
+      <app-momExpenditure></app-momExpenditure>
+    </app-full-page-layout>
+  </div>
+  <div class="shadow-effect mb-5">
+    <app-full-page-layout>
+      <app-monthly-expenditure></app-monthly-expenditure>
+    </app-full-page-layout>
+  </div>
+
+  <!-- <app-half-page-layout>
   <app-earning-composition></app-earning-composition>
 </app-half-page-layout>
 
@@ -10,11 +30,7 @@
   <app-earning-composition></app-earning-composition>
 </app-one-third-page-layout>  -->
 
-<app-full-page-layout>
-  <app-net-income></app-net-income>
-</app-full-page-layout>
-
-<!-- <app-half-page-layout>
+  <!-- <app-half-page-layout>
   <app-net-income></app-net-income>
 
 </app-half-page-layout>
@@ -24,7 +40,7 @@
 
 </app-one-third-page-layout> -->
 
-<!-- <app-full-page-layout>
+  <!-- <app-full-page-layout>
   <app-highchart [options]="options"></app-highchart>
 </app-full-page-layout>
 
@@ -35,10 +51,4 @@
 <app-one-third-page-layout>
   <app-highchart [options]="options"></app-highchart>
 </app-one-third-page-layout>  -->
-
-<app-full-page-layout>
-  <app-momExpenditure></app-momExpenditure>
-</app-full-page-layout>
-<app-full-page-layout>
-  <app-monthly-expenditure></app-monthly-expenditure>
-</app-full-page-layout>
+</div>

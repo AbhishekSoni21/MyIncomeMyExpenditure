@@ -13,6 +13,7 @@ import { NetIncomeComponent } from './Page/net-income/net-income.component';
 import { EarningCompositionComponent } from './earning-composition/earning-composition.component';
 import { MonthlyExpenditureComponent } from './monthly-expenditure/monthly-expenditure.component';
 import { MoMExpenditureComponent } from './momExpenditure/momExpenditure.component';
+import { FilterSectionComponent } from './filter-section/filter-section.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { MoMExpenditureComponent } from './momExpenditure/momExpenditure.compone
     EarningCompositionComponent,
     MonthlyExpenditureComponent,
     MoMExpenditureComponent,
+    FilterSectionComponent,
   ],
   imports: [
     BrowserModule,

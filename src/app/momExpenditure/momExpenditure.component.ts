@@ -1,3 +1,5 @@
+import { AppServiceService } from './../app-service.service';
+import { MONTHS } from './../highchart/helperData';
 import { HighchartService } from './../highchart/highchart.service';
 import { Component } from '@angular/core';
 import { NETBALANCE } from '../highchart/mockData';
@@ -8,10 +10,20 @@ import { NETBALANCE } from '../highchart/mockData';
   styleUrls: ['./momExpenditure.component.scss'],
 })
 export class MoMExpenditureComponent {
-  constructor(private highChartService: HighchartService) {}
+  selectedYear=''
+  constructor(private highChartService: HighchartService,private appService:AppServiceService) {}
   ngOnInit() {
     // this.createGraph();
+    this.selectedYear=this.appService.selectedYear.value.toString()
     this.loadData();
+    this.appService.selectedYear.subscribe((value: any) => {
+      this.selectedYear=this.appService.selectedYear.value.toString()
+      this.loadData();
+
+    });
+    this.appService.selectedMonth.subscribe((value: any) => {
+      this.loadData();
+    });
   }
 
   highchartProperties = {
@@ -22,7 +34,7 @@ export class MoMExpenditureComponent {
     },
     options: {
       chartProperties: {
-        title: 'Month on Month Expenditure',
+        title:' - Month on Month Expenditure',
         subTitle: '',
         showTotal: false,
         yAxisTitle: 'Amount in ₹',
@@ -43,23 +55,6 @@ export class MoMExpenditureComponent {
     const widgetData=JSON.parse(JSON.stringify(NETBALANCE))
     const data = widgetData.map((value: any) => {
       const expenditure = Object.keys(value.expenditure);
-      // const deductionKey = Object.keys(value.deduction);
-      // const earningKey = Object.keys(value.earning);
-      // let earningTotal = 0;
-      // let deductionTotal = 0;
-      // for (let e in earningKey) {
-      //   const tempKey='earning_'+earningKey[e]
-      //   value[tempKey]=value['earning'][earningKey[e]]
-      //   earningTotal += value['earning'][earningKey[e]];
-      // }
-      // for (let e in deductionKey) {
-      //   const tempKey='deduction_'+deductionKey[e]
-      //   value[tempKey]=value['deduction'][deductionKey[e]]
-      //   deductionTotal += value['deduction'][deductionKey[e]];
-      // }
-      // value['deduction_netIncome'] = (earningTotal || 0) - (deductionTotal || 0);
-      // value['grossIncome'] = (earningTotal || 0) + (deductionTotal || 0);
-      // return value;
       for (let e in expenditure) {
         const tempKey = 'expenditure_' + expenditure[e];
         value[tempKey] = value['expenditure'][expenditure[e]];
@@ -67,36 +62,28 @@ export class MoMExpenditureComponent {
       }
       return value;
     });
-    console.log('expenditure data is', data);
-    this.createGraph(data);
+    // this.createGraph(data);
+    this.extractData(data);
   }
 
-  createGraph(data: any) {
-    const months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-
+  extractData(data:any){
     const sortedData = data.sort((a: any, b: any) => {
       if (a.year != b.year) {
         return a.year - b.year;
       } else {
-        return months.indexOf(a.month) - months.indexOf(b.month);
+        return MONTHS.indexOf(a.month) - MONTHS.indexOf(b.month);
       }
     });
-    console.log('sorted data', sortedData);
-    const filteredRecord = sortedData.reverse().slice(0, 12).reverse();
-    console.log('filteredRecord data', filteredRecord);
+    const filteredRecord = sortedData;
+    
+    const selectedYearData = filteredRecord.filter(
+      (value:any) => value.year === this.appService.selectedYear.value
+    );
+    this.createGraph(selectedYearData);
+  }
+
+  createGraph(filteredRecord: any) {
+    
     const ignoredSeries = [
       'deduction',
       'earning',
@@ -108,15 +95,14 @@ export class MoMExpenditureComponent {
     const series = Object.keys(filteredRecord[0]).filter(
       (value) => ignoredSeries.indexOf(value) === -1
     );
-    console.log('***series', series);
 
     const defaultProperties = this.highChartService.setHighchartOption(
-      this.highchartProperties
+      this.highchartProperties,this.selectedYear
     );
     const categories = filteredRecord.map(
       (value: any) =>
         'FY' +
-        (+months.indexOf(value?.month) > 2
+        (+MONTHS.indexOf(value?.month) > 2
           ? (value?.year + 1).toString().slice(2)
           : (value?.year).toString().slice(2)) +
         ' ' +

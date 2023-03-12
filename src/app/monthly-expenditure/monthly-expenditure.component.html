@@ -1,15 +1,4 @@
 <h1 class="chart-title my-5 text-center">
   Expenditure of {{ monthName }} {{ currentYear }}
 </h1>
-<form>
-  <mat-form-field>
-    <mat-label>Select Year-Month</mat-label>
-    <mat-select [(ngModel)]="selectedValue.value" name="yearmonth">
-      <mat-option *ngFor="let data of yearData" [value]="data.value" (onSelectionChange)="handleFilterChange($event,data)">
-        {{data.value}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-</form>
-
 <app-highchart [options]="options"></app-highchart>

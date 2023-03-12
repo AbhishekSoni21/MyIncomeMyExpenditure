@@ -1,3 +1,4 @@
+import { AppServiceService } from './../app-service.service';
 import { Component } from '@angular/core';
 import { HighchartService } from '../highchart/highchart.service';
 import { NETBALANCE } from '../../app/highchart/mockData';
@@ -9,17 +10,21 @@ import { MONTHS, MONTHSLIST } from '../highchart/helperData';
   styleUrls: ['./monthly-expenditure.component.scss'],
 })
 export class MonthlyExpenditureComponent {
-  constructor(private highChartService: HighchartService) {}
+  constructor(
+    private highChartService: HighchartService,
+    private appService: AppServiceService
+  ) {}
   monthName = '';
   currentYear: number = new Date().getFullYear();
-  selectedValue: { key: string; value: string } = {} as {
-    key: string;
-    value: string;
-  };
-  yearData: any[] = [];
-  allData: any[] = [];
+
   ngOnInit() {
     this.loadData();
+    this.appService.selectedYear.subscribe((value: any) => {
+      this.loadData();
+    });
+    this.appService.selectedMonth.subscribe((value: any) => {
+      this.loadData();
+    });
   }
 
   highchartProperties = {
@@ -68,7 +73,6 @@ export class MonthlyExpenditureComponent {
       }
     });
     const filteredRecord = sortedData;
-    this.allData=filteredRecord;
     const tempOption: {}[] = [];
     filteredRecord.map((val: any) =>
       tempOption.push({
@@ -76,26 +80,12 @@ export class MonthlyExpenditureComponent {
         value: val.year + '-' + val.month,
       })
     );
-    this.yearData = [...tempOption.reverse()];
-    this.selectedValue = this.yearData?.[0];
-
-    const [year, month] = this.selectedValue?.['key']?.split('-');
     const selectedYearData = filteredRecord.filter(
-      (value: any) => value.year === +year && value.month === month
+      (value: any) =>
+        value.year === this.appService.selectedYear.value &&
+        value.month === this.appService.selectedMonth.value
     );
     this.createGraph(selectedYearData);
-  }
-
-  handleFilterChange(e:any,data: any) {
-    if(e?.isUserInput&& e?.source?.value){
-      this.selectedValue=data
-    
-    const [year, month] = this.selectedValue?.['key']?.split('-');
-    const selectedYearData = this.allData.filter(
-      (value) => value.year === +year && value.month === month
-    );
-    this.createGraph(selectedYearData);
-    }
   }
 
   createGraph(filteredRecord: any) {

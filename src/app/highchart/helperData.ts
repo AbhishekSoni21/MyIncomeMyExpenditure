@@ -13,17 +13,17 @@ export const MONTHS = [
   'Dec',
 ];
 
-export const MONTHSLIST:{key:string,value:string}[] = [
-  {key:'Jan',value:'January'},
-  {key:'Feb',value:'February'},
-  {key:'Mar',value:'March'},
-  {key:'Apr',value:'April'},
-  {key:'May',value:'May'},
-  {key:'Jun',value:'June'},
-  {key:'Jul',value:'July'},
-  {key:'Aug',value:'August'},
-  {key:'Sep',value:'September'},
-  {key:'Oct',value:'October'},
-  {key:'Nov',value:'Novemeber'},
-  {key:'Dec',value:'December'}
+export const MONTHSLIST: { key: string; value: string; order: number }[] = [
+  { key: 'Jan', value: 'January', order: 1 },
+  { key: 'Feb', value: 'February', order: 2 },
+  { key: 'Mar', value: 'March', order: 3 },
+  { key: 'Apr', value: 'April', order: 4 },
+  { key: 'May', value: 'May', order: 5 },
+  { key: 'Jun', value: 'June', order: 6 },
+  { key: 'Jul', value: 'July', order: 7 },
+  { key: 'Aug', value: 'August', order: 8 },
+  { key: 'Sep', value: 'September', order: 9 },
+  { key: 'Oct', value: 'October', order: 10 },
+  { key: 'Nov', value: 'Novemeber', order: 11 },
+  { key: 'Dec', value: 'December', order: 12 },
 ];
