@@ -341,7 +341,7 @@ export class HighchartService {
     const chart = {
       chart: {
         type: 'column',
-        zoomType: 'x',
+        zoomType: 'xy',
         panning: true,
         panKey: 'shift',
         // style:{
@@ -470,7 +470,7 @@ export class HighchartService {
     const chart = {
       chart: {
         type: 'column',
-        zoomType: 'x',
+        zoomType: 'xy',
         panning: true,
         panKey: 'shift',
         // style:{
@@ -608,7 +608,7 @@ export class HighchartService {
     const chart = {
       chart: {
         type: 'bar',
-        zoomType: 'x',
+        zoomType: 'xy',
         panning: true,
         panKey: 'shift'
         // style:{
@@ -714,7 +714,7 @@ export class HighchartService {
     const chart = {
       chart: {
         type: 'column',
-        zoomType: 'x',
+        zoomType: 'xy',
         panning: true,
         panKey: 'shift'
         // style:{
@@ -853,7 +853,7 @@ export class HighchartService {
     const chart = {
       chart: {
         type: 'line',
-        zoomType: 'x',
+        zoomType: 'xy',
         panning: true,
         panKey: 'shift',
         style: {
@@ -925,7 +925,7 @@ export class HighchartService {
     const chart = {
       chart: {
         type: 'area',
-        zoomType: 'x',
+        zoomType: 'xy',
         panning: true,
         panKey: 'shift',
         style: {
