@@ -341,6 +341,9 @@ export class HighchartService {
     const chart = {
       chart: {
         type: 'column',
+        zoomType: 'x',
+        panning: true,
+        panKey: 'shift',
         // style:{
         //   fontFamily:''
         // }
@@ -467,6 +470,9 @@ export class HighchartService {
     const chart = {
       chart: {
         type: 'column',
+        zoomType: 'x',
+        panning: true,
+        panKey: 'shift',
         // style:{
         //   fontFamily:''
         // }
@@ -602,6 +608,9 @@ export class HighchartService {
     const chart = {
       chart: {
         type: 'bar',
+        zoomType: 'x',
+        panning: true,
+        panKey: 'shift'
         // style:{
         //   fontFamily:''
         // }
@@ -844,6 +853,9 @@ export class HighchartService {
     const chart = {
       chart: {
         type: 'line',
+        zoomType: 'x',
+        panning: true,
+        panKey: 'shift',
         style: {
           // fontFamily:''
         },
@@ -913,6 +925,9 @@ export class HighchartService {
     const chart = {
       chart: {
         type: 'area',
+        zoomType: 'x',
+        panning: true,
+        panKey: 'shift',
         style: {
           // fontFamily:''
         },
