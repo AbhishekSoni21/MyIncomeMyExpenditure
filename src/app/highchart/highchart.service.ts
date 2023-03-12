@@ -705,6 +705,9 @@ export class HighchartService {
     const chart = {
       chart: {
         type: 'column',
+        zoomType: 'x',
+        panning: true,
+        panKey: 'shift'
         // style:{
         //   fontFamily:''
         // }
